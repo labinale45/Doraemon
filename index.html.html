@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sanu! 🎂</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 20px;
+        }
+
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff69b4;
+            font-size: 20px;
+            animation: floatHeart 3s ease-in-out infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-20px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .doraemon-container {
+            position: relative;
+            z-index: 10;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .doraemon-container:hover {
+            transform: scale(1.1);
+        }
+
+        .doraemon-image {
+            width: 250px;
+            height: 250px;
+            background-image: url('doraemon.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: relative;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .birthday-message {
+            text-align: center;
+            color: #ff1493;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin: 30px 0;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .birthday-message h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .birthday-message h2 {
+            font-size: 2em;
+            color: #ff69b4;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .gadget {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.5s ease;
+            border: 3px solid #ff69b4;
+            background: linear-gradient(45deg, #fff, #f0f8ff);
+            box-shadow: 0 4px 15px rgba(255,105,180,0.4);
+        }
+
+        .gadget.show {
+            opacity: 1;
+            transform: scale(1);
+            animation: gadgetFloat 2s ease-in-out;
+        }
+
+        @keyframes gadgetFloat {
+            0% { transform: scale(1) translateY(0px) rotate(0deg); }
+            50% { transform: scale(1.1) translateY(-20px) rotate(10deg); }
+            100% { transform: scale(1) translateY(0px) rotate(0deg); }
+        }
+
+        .gadget-anywhere-door {
+            top: -100px;
+            left: -100px;
+            background: linear-gradient(45deg, #8B4513, #A0522D);
+        }
+
+        .gadget-bamboo-copter {
+            top: -100px;
+            right: -100px;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+        }
+
+        .gadget-time-machine {
+            bottom: -100px;
+            left: -100px;
+            background: linear-gradient(45deg, #C0C0C0, #808080);
+        }
+
+        .gadget-magic-pocket {
+            bottom: -100px;
+            right: -100px;
+            background: linear-gradient(45deg, #FF69B4, #FF1493);
+        }
+
+        .sparkles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .sparkle {
+            position: absolute;
+            color: #ffd700;
+            font-size: 20px;
+            animation: twinkle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        .memory-photos {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-gallery {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+        }
+
+        .photo-item {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 10px;
+            border: 4px solid #ff69b4;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255,105,180,0.3);
+        }
+
+        .photo-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255,105,180,0.5);
+        }
+
+        .memory-button {
+            background: #ff69b4;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 20px;
+            box-shadow: 0 4px 15px rgba(255,105,180,0.4);
+            transition: all 0.3s ease;
+        }
+
+        .memory-button:hover {
+            background: #ff1493;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,105,180,0.6);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            background: #ff1493;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .surprise-text {
+            background: rgba(255,255,255,0.9);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px;
+            text-align: center;
+            color: #ff1493;
+            font-size: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff69b4;
+            animation: confettiFall 3s linear infinite;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .gadget-message {
+            position: absolute;
+            background: rgba(255,255,255,0.95);
+            padding: 15px;
+            border-radius: 20px;
+            color: #ff1493;
+            font-weight: bold;
+            border: 2px solid #ff69b4;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.5s ease;
+            z-index: 100;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255,105,180,0.3);
+        }
+
+        .gadget-message.show {
+            opacity: 1;
+            transform: translateY(-50px);
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .photo-memory {
+            text-align: center;
+        }
+
+        .photo-memory img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 4px solid #ff69b4;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-memory img:hover {
+            transform: scale(1.05);
+        }
+
+        .photo-caption {
+            margin-top: 10px;
+            color: #ff1493;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .birthday-message h1 {
+                font-size: 2em;
+            }
+            .birthday-message h2 {
+                font-size: 1.5em;
+            }
+            .doraemon-image {
+                width: 200px;
+                height: 200px;
+            }
+            .photo-item {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hearts" id="hearts"></div>
+        <div class="sparkles" id="sparkles"></div>
+
+        <div class="birthday-message">
+            <h1>Happy Birthday</h1>
+            <h2>Mero Sanu! 💕</h2>
+        </div>
+
+        <div class="doraemon-container" id="doraemon" onclick="surpriseClick()">
+            <div class="doraemon-image">
+                <!-- Doraemon's magical gadgets -->
+                <div class="gadget gadget-anywhere-door" id="gadget1">🚪</div>
+                <div class="gadget gadget-bamboo-copter" id="gadget2">🚁</div>
+                <div class="gadget gadget-time-machine" id="gadget3">⏰</div>
+                <div class="gadget gadget-magic-pocket" id="gadget4">✨</div>
+ 
+                
+                <div class="gadget-message" id="gadgetMessage">
+                    🎁 Magical surprise for Sanu! 🎁
+                </div>
+            </div>
+        </div>
+
+        <div class="surprise-text">
+            <p>💝 Click on Doraemon for magical gadget surprises! 💝</p>
+       
+        </div>
+
+        <button class="memory-button" onclick="showMemories()">
+            📸 Beautiful of you 📸
+        </button>
+    </div>
+
+    <div class="memory-photos" id="memoryModal">
+        <div class="photo-gallery">
+            <button class="close-btn" onclick="hideMemories()">×</button>
+            <h2 style="text-align: center; color: #ff1493; margin-bottom: 20px;">
+                Memories with Sanu 💕
+            </h2>
+            
+            <div class="photo-grid">
+                <div class="photo-memory">
+                    <img src="mn.jpeg" alt="Heart LED Memory">
+                    <div class="photo-caption">💖 Magical Heart LED Moment</div>
+                </div>
+                
+                <div class="photo-memory">
+                    <img src="kf.jpeg">
+                    <div class="photo-caption">🌍 Dreams & World Adventures</div>
+                </div>
+                
+                <div class="photo-memory">
+                    <img src="lk.jpeg" alt="Lakeside Memory">
+                    <div class="photo-caption">🏞️ Peaceful Lakeside Moments</div>
+                </div>
+                
+                <div class="photo-memory">
+                    <img src="ts.jpeg" alt="Mountain Memory">
+                    <div class="photo-caption">🏔️ High Spirits & Adventures</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px; color: #ff1493;">
+                <p style="font-size: 18px;"><strong>✨ Each memory is a treasure, Sanu! ✨</strong></p>
+                <p style="font-size: 16px; margin-top: 10px;">From romantic heart moments 💖 to world adventures 🌍</p>
+                <p style="font-size: 16px;">From peaceful lakeside serenity 🏞️ to mountain highs 🏔️</p>
+                <p style="font-size: 18px; margin-top: 15px; font-weight: bold;">🎂 May your birthday be as beautiful as these moments! 🎂</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let surpriseCount = 0;
+        let isScrolling = false;
+        let currentGadget = 0;
+        
+        const gadgets = [
+            { id: 'gadget1', message: '🚪 Anywhere Door: Let\'s go anywhere you dream, Sanu!' },
+            { id: 'gadget2', message: '🚁 Bamboo Copter: Fly high like your beautiful spirit!' },
+            { id: 'gadget3', message: '⏰ Time Machine: Every moment with you is precious!' },
+            { id: 'gadget4', message: '✨ Magic Pocket: Full of love and wishes for you!' }
+
+        ];
+
+        // Create floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = Math.random() > 0.5 ? '💕' : '💖';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            document.getElementById('hearts').appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        // Create sparkles
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.innerHTML = ['✨', '⭐', '💫', '🌟'][Math.floor(Math.random() * 4)];
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            document.getElementById('sparkles').appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 1500);
+        }
+
+        // Create confetti
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = ['#ff69b4', '#ffd700', '#ff1493', '#87ceeb', '#98fb98'][Math.floor(Math.random() * 5)];
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 3000);
+                }, i * 50);
+            }
+        }
+
+        // Show gadget with message
+        function showGadget() {
+            const gadget = gadgets[currentGadget];
+            const gadgetElement = document.getElementById(gadget.id);
+            const messageElement = document.getElementById('gadgetMessage');
+            
+            // Hide all gadgets first
+            gadgets.forEach(g => {
+                document.getElementById(g.id).classList.remove('show');
+            });
+            
+            // Show current gadget
+            gadgetElement.classList.add('show');
+            
+            // Show message
+            messageElement.textContent = gadget.message;
+            messageElement.classList.add('show');
+            
+            // Hide message after 3 seconds
+            setTimeout(() => {
+                messageElement.classList.remove('show');
+                gadgetElement.classList.remove('show');
+            }, 3000);
+            
+            currentGadget = (currentGadget + 1) % gadgets.length;
+        }
+
+        // Surprise click function
+        function surpriseClick() {
+            surpriseCount++;
+            
+            // Show random gadget
+            showGadget();
+            
+            // Create sparkles at click position
+            const doraemon = document.getElementById('doraemon');
+            const rect = doraemon.getBoundingClientRect();
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    createSparkle(
+                        rect.left + Math.random() * rect.width,
+                        rect.top + Math.random() * rect.height
+                    );
+                }, i * 100);
+            }
+            
+            // Special messages based on click count
+            if (surpriseCount === 1) {
+                setTimeout(() => {
+                    alert("🎂 Doraemon: Happy Birthday, dear Sanu! I brought my magical gadgets for you! 💕");
+                }, 1000);
+            } else if (surpriseCount === 3) {
+                createConfetti();
+                setTimeout(() => {
+                    alert("🎉 Doraemon: You're so wonderful, Aagya! Each gadget holds a special wish for you! ✨");
+                }, 1000);
+            } else if (surpriseCount === 5) {
+                createConfetti();
+                setTimeout(() => {
+                    alert("💖 Doraemon: Just like your beautiful memories, you make every moment magical! 🌟");
+                }, 1000);
+            } else if (surpriseCount === 7) {
+                createConfetti();
+                setTimeout(() => {
+                    alert("🎁 Doraemon: My magic pocket is full of birthday wishes just for you, Sanu! 🎂✨");
+                }, 1000);
+            }
+        }
+
+        // Show memories modal
+        function showMemories() {
+            document.getElementById('memoryModal').style.display = 'flex';
+            createConfetti();
+            setTimeout(() => {
+                alert("📸 These beautiful memories show what a wonderful person you are, Aagya! 💕");
+            }, 500);
+        }
+
+        // Hide memories modal
+        function hideMemories() {
+            document.getElementById('memoryModal').style.display = 'none';
+        }
+
+        // Scroll effects
+        window.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                isScrolling = true;
+                createSparkle(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+                
+                setTimeout(() => {
+                    isScrolling = false;
+                }, 200);
+            }
+        });
+
+        // Mouse move effects
+        document.addEventListener('mousemove', (e) => {
+            if (Math.random() < 0.02) {
+                createSparkle(e.clientX, e.clientY);
+            }
+        });
+
+        // Touch effects for mobile
+        document.addEventListener('touchmove', (e) => {
+            if (Math.random() < 0.05) {
+                const touch = e.touches[0];
+                createSparkle(touch.clientX, touch.clientY);
+            }
+        });
+
+        // Create hearts periodically
+        setInterval(createHeart, 1500);
+
+        // Initial setup
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                alert("💕K xa Manxey, Timi Jhareko Din ko  Subha Kamana Sanu Happy BirthDay Sanu ! 🎂\n\n  Xoto Khutta wala Doraemon le special gadgets lako xa arey just for you!\nClick on him to see the magic! ✨");
+            }, 1000);
+            
+            // Create initial hearts
+            for (let i = 0; i < 5; i++) {
+                setTimeout(createHeart, i * 500);
+            }
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('memoryModal').addEventListener('click', (e) => {
+            if (e.target.id === 'memoryModal') {
+                hideMemories();
+            }
+        });
+    </script>
+</body>
+</html>
